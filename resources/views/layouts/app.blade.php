@@ -8,52 +8,51 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        body { background: #f5f6fa; }
+        body {
+            background: #f4f6f9;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
         .sidebar {
             min-height: 100vh;
-            background: linear-gradient(180deg,rgb(26, 51, 237) 0%,rgb(18, 88, 185) 100%);
-            color: #fff;
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
             padding-top: 1rem;
+            transition: background 0.3s ease;
         }
+
         .sidebar .nav-link, .sidebar .btn {
+            color: #ecf0f1;
+            font-size: 1rem;
+        }
+
+        .sidebar .nav-link.active {
+            background: #f39c12;
             color: #fff;
         }
-        .sidebar .nav-link.active {
-            background: #fff;
-            color: #178ca4;
-        }
+
         .sidebar .nav-link:hover {
-            background: #e6f2fa;
-            color: #178ca4;
+            background: #16a085;
+            color: #fff;
         }
-        .main-content {
-            background: #fff;
-            min-height: 100vh;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-            padding: 2rem;
-        }
-        
-        /* Styling untuk dropdown sidebar */
-        .sidebar .dropdown-toggle::after {
-            display: none;
-        }
-        
+
         .sidebar .dropdown-toggle {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0.5rem 1rem;
         }
-        
+
         .sidebar .dropdown-toggle .dropdown-icon {
             transition: transform 0.3s;
         }
-        
+
         .sidebar .dropdown-toggle[aria-expanded="true"] .dropdown-icon {
             transform: rotate(180deg);
         }
-        
+
         .sidebar .dropdown-menu {
             position: static;
             background: transparent;
@@ -62,31 +61,64 @@
             margin: 0;
             width: 100%;
         }
-        
+
         .sidebar .dropdown-menu .nav-link {
             padding: 8px 12px;
             font-size: 0.9rem;
             border-radius: 4px;
             transition: all 0.2s;
         }
-        
+
         .sidebar .dropdown-menu .nav-link.active {
-            background: #fff;
-            color: #178ca4;
+            background: #f39c12;
+            color: #fff;
             font-weight: 500;
         }
-        
+
         .sidebar .dropdown-menu .nav-link:hover {
-            background: #e6f2fa;
-            color: #178ca4;
+            background: #16a085;
+            color: #fff;
         }
-        
-        .sidebar .nav-item.mb-2 {
-            margin-bottom: 0.25rem !important;
+
+        .main-content {
+            background: #fff;
+            min-height: 100vh;
+            border-radius: 8px;
+            margin: 2rem 0;
+            padding: 2rem;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            transition: padding 0.3s ease;
         }
-        
-        .sidebar .dropdown-menu .nav-item {
-            margin-bottom: 0.25rem;
+
+        .main-content h1 {
+            color: #2c3e50;
+        }
+
+        /* Styling untuk sidebar hover */
+        .sidebar:hover {
+            background: linear-gradient(180deg, #34495e 0%, #2c3e50 100%);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 250px;
+                height: 100%;
+                z-index: 999;
+                transition: transform 0.3s ease-in-out;
+                transform: translateX(-250px);
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .sidebar .nav-link {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -113,7 +145,7 @@
                     e.preventDefault();
                     var target = this.getAttribute('data-bs-target');
                     var dropdownMenu = document.querySelector(target);
-                    
+
                     // Toggle aria-expanded attribute dan class show pada dropdown menu
                     if (dropdownMenu) {
                         var isExpanded = this.getAttribute('aria-expanded') === 'true';
@@ -126,7 +158,7 @@
                     }
                 });
             });
-            
+
             // Buka dropdown secara otomatis jika submenu aktif
             var activeSubmenu = document.querySelector('.dropdown-menu .nav-link.active');
             if (activeSubmenu) {
